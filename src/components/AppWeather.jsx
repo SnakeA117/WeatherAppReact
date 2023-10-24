@@ -1,19 +1,26 @@
 
 import useWeather from '../hooks/UseWeather'
 import Form from './Form'
+import Loading from './Loading'
 import Result from './Result'
+
 
 
 const AppWeather = () => {
 
-  const { result } = useWeather()
+  const { result, loading, nonResult } = useWeather()
   return (
     <>
         <main className="dos-columnas">
             <Form/>
 
-            { result?.name && <Result/>}
-  
+            { 
+            
+            loading ? <Loading/> :
+            result?.name ? <Result/> :
+             nonResult ? <p>{nonResult}</p> : <p>Weather will show here:</p>
+            }
+
         </main>
     </>
   )

@@ -13,6 +13,10 @@ const WeatherProvider = ({children}) => {
 
     const [result, setResult] = useState({})
 
+    const [loading, setLoading] = useState(false)
+    const [nonResult, setNonResult] =  useState(false)
+
+
     const dataSearch = e => {
         setSearch({
             ...search,
@@ -23,6 +27,9 @@ const WeatherProvider = ({children}) => {
     }
 
     const consultWeather = async datas => {
+
+        setLoading(true)
+        setNonResult(false)
         try {
             const { city, country } = datas
             const appId = import.meta.env.VITE_API_KEY
@@ -36,10 +43,14 @@ const WeatherProvider = ({children}) => {
 
             const { data: weather } = await axios(urlWeather)
             setResult(weather)
-
+         
         }catch (error) {
-            console.log(error)
+            setNonResult('No results found')
+        } finally {
+            setLoading(false)
         }
+
+   
     }
 
 
@@ -49,7 +60,10 @@ const WeatherProvider = ({children}) => {
                 search,
                 dataSearch,
                 consultWeather,
-                result
+                result,
+                loading,
+                nonResult,
+                setResult
             }}
         >
             {children}

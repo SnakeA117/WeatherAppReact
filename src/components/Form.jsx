@@ -6,7 +6,7 @@ const Form = () => {
     
     const [alert, setAlert] = useState('')
 
-    const { search, dataSearch, consultWeather } = useWeather()
+    const { search, dataSearch, consultWeather, setResult } = useWeather()
     const { city, country } = search
 
     const handleSubmit = e => {
@@ -16,8 +16,9 @@ const Form = () => {
             setAlert('All fields are required')
             return
         }
-
+        setAlert('')
         consultWeather(search)
+        setResult({})
     }
 
 
